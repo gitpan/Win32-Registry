@@ -1,0 +1,45 @@
+Added OpenEx()
+
+The path passed to Open(), OpenEx(), Create() and CreateEx() may be either relative
+to the key or absolute. All methods may even be caled as normal functions.
+
+All methods that return some value(s) may now be used either as both
+	$obj->Foo($params, $result)
+and
+	$result = $obj->Foo($params)
+
+Added SetValues() method that allows you to set several values in a key in one call.
+
+Added QueryType()
+
+$HKCR->Connect($computername, $rHKCR) now opens the
+HKEY_LOCAL_MACHINE\Software\Classes on that computer (HKEY_CLASSES_ROOT
+cannot be connected directly. At least it could not under WinNT.)
+
+Added GetValue() (gives you the specified value in the current key. Compare
+with QueryValue() that gives you the default value of the specified SUBKEY.)
+
+Added QueryInfoKey() which gives you more data than QueryKey()
+
+Added ForKeys() - calls your handler for all subkeys of the current key.
+
+Added GetOnlyValues() - similar to GetValues(), creates hash that contains just
+	name => value
+GetValues() creates a hash with
+	name => [name, type, value]
+
+DeleteKey() is able to delete the keys recursively (even if the OS itself is not)
+
+Added MoveKey(), CopyKey() and FlushKey().
+
+Added FindKey(), FindKeyDepth(), FindValue(), FindValueDepth()
+- designed after File::Find, traverse through a tree of keys in the registry
+and calls a handler for each key/value found.
+
+Hives may be loaded either persistently or temporarily.
+In the second case they are automaticaly unloaded when the script exits.
+
+Added Import(), ImportStr() and Export() - export and import in the REGEDIT4 format
+(the plaintext format used by regedit.exe in Win9x/NT)
+
+Completely rewriten the docs (and the whole Perl part of the module).
