@@ -1,45 +1,54 @@
-Added OpenEx()
+Revision history for Perl extension Win32::Registry.
 
-The path passed to Open(), OpenEx(), Create() and CreateEx() may be either relative
-to the key or absolute. All methods may even be caled as normal functions.
+0.08  Tue Apr 15 2008
+	- version 0.08 for separate upload to CPAN
+	- simplified Makefile.PL
+	- added META.yml
 
-All methods that return some value(s) may now be used either as both
-	$obj->Foo($params, $result)
-and
-	$result = $obj->Foo($params)
+0.07  Mon May 22 21:47:32 2000
+	- added retry for RegQueryValueEx (courtesy Tye McQueen
+	  <tye@metronet.com>)
+	- add DESTROY() for proper cleanup (from Jenda Krynicky
+	  <Jenda@Krynicky.cz>)
+	- added POD documentation
+	- failed API calls now call SetLastError() making it visible
+	  via $^E; RegEnumKeyEx() added to XS code (thanks to Jenda
+	  Krynicky)
+	- *DO NOT USE THIS MODULE* in new code; use Win32::TieRegistry
+	  instead
 
-Added SetValues() method that allows you to set several values in a key in one call.
+0.06  Sat Nov 14 23:05:24 1998
+	- missing SetPrivilege() in UnLoadKey()
 
-Added QueryType()
+0.05  Tue Sep 15 12:29:06 1998
+	- support setting REG_NONE
+	- clean up the perl (somewhat)
 
-$HKCR->Connect($computername, $rHKCR) now opens the
-HKEY_LOCAL_MACHINE\Software\Classes on that computer (HKEY_CLASSES_ROOT
-cannot be connected directly. At least it could not under WinNT.)
+0.04  Thu Apr 16 23:00:26 1998
+	- export compatibility symbols RegFoo() (courtesy Tye McQueen
+	  <tye@metronet.com>)
+	- enable priveleges in Reg*Key() functions as needed (courtesy
+	  Jutta M. Klebe <jmk@exc.bybyte.de>)
+	- fix wrong number of args to RegQueryValueEx()
 
-Added GetValue() (gives you the specified value in the current key. Compare
-with QueryValue() that gives you the default value of the specified SUBKEY.)
+0.03  Fri Feb  6 21:24:30 1998
+	- import changes from AS build 315
+	- eliminate hardcoded constants in Registry.pm
+	- add additional XSUBs for missing Win32 API counterparts
+	- fix for Load()/UnLoad() courtesy Jutta M. Klebe <jmk@exc.bybyte.de>
 
-Added QueryInfoKey() which gives you more data than QueryKey()
+0.02  Sat Aug  2 00:45:08 1997
+	- added RegQueryValueEx() (as suggested by
+	  Jutta Klebe <jmk@exc.bybyte.de>)
+	- Add missing arg for RegQueryInfoKey()
+	- Fixed RegSetValueEx() for empty values, and memory corruption
+	- Following two changes courtesy Jeff Urlwin
+	  <jurlwin@access.digex.net> and Michael Frederick:
+	    * new Connect() method and remote.pl example for accessing
+	      remove registry objects
+	    * iis_install.pl example
 
-Added ForKeys() - calls your handler for all subkeys of the current key.
+0.01  Sat Apr  5 14:23:42 1997
+	- original version; created by h2xs 1.18
+	- imported Activeware version
 
-Added GetOnlyValues() - similar to GetValues(), creates hash that contains just
-	name => value
-GetValues() creates a hash with
-	name => [name, type, value]
-
-DeleteKey() is able to delete the keys recursively (even if the OS itself is not)
-
-Added MoveKey(), CopyKey() and FlushKey().
-
-Added FindKey(), FindKeyDepth(), FindValue(), FindValueDepth()
-- designed after File::Find, traverse through a tree of keys in the registry
-and calls a handler for each key/value found.
-
-Hives may be loaded either persistently or temporarily.
-In the second case they are automaticaly unloaded when the script exits.
-
-Added Import(), ImportStr() and Export() - export and import in the REGEDIT4 format
-(the plaintext format used by regedit.exe in Win9x/NT)
-
-Completely rewriten the docs (and the whole Perl part of the module).
