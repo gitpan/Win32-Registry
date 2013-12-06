@@ -43,13 +43,12 @@ on one of these.
 use strict;
 require Exporter;
 require DynaLoader;
-use Win32::WinError;
 
 require Win32 unless defined &Win32::GetLastError;
 
 use vars qw($VERSION $AUTOLOAD @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 @ISA	= qw( Exporter DynaLoader );
 @EXPORT = qw(
